@@ -22,8 +22,8 @@
 
             <!-- Toggler/collapsibe Button -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
@@ -41,6 +41,29 @@
             </div>
         </nav>
     </header>
+
+    <form action="action_page.php">
+        <hr>
+        <div class="container">
+            <h1 class="h1">Login</h1>
+            <p>Please enter your username and password</p>
+            <hr>
+            <div class="form-group">
+                <label for="name">Username:</label>
+                <input type="text" class="form-control" id="name">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <label>
+                <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <hr>
+    </form>
 </body>
 
 </html>
