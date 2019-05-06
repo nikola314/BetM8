@@ -18,216 +18,216 @@ USE `db_betm8`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `korisnik`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `korisnik`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `korisnik` (
-  `idKorisnik` int(11) NOT NULL AUTO_INCREMENT,
-  `Ime` varchar(20) NOT NULL,
-  `Prezime` varchar(20) NOT NULL,
-  `KorisnickoIme` varchar(20) NOT NULL,
-  `Sifra` varchar(40) NOT NULL,
-  `Email` varchar(40) NOT NULL,
-  `Zemlja` varchar(30) NOT NULL,
-  `Tip` int(11) NOT NULL,
-  `Pare` int(11) NOT NULL,
-  `Status` int(11) NOT NULL,
-  PRIMARY KEY (`idKorisnik`),
-  UNIQUE KEY `KorisnickoIme_UNIQUE` (`KorisnickoIme`),
-  UNIQUE KEY `Email_UNIQUE` (`Email`)
+CREATE TABLE `user` (
+  `idUser` int(11) NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(20) NOT NULL,
+  `lastName` varchar(20) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(40) NOT NULL,
+  `mail` varchar(40) NOT NULL,
+  `country` varchar(30) NOT NULL,
+  `type` int(11) NOT NULL,
+  `money` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  PRIMARY KEY (`idUser`),
+  UNIQUE KEY `username_UNIQUE` (`username`),
+  UNIQUE KEY `mail_UNIQUE` (`mail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `korisnik`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `korisnik` WRITE;
-/*!40000 ALTER TABLE `korisnik` DISABLE KEYS */;
-INSERT INTO `korisnik` VALUES (1,'Nikola','Kesic','nikola314','nikola','nikola.kesic97@gmail.com','Srbija',1,20000,1),(2,'Dimitrije','Milenkovic','dimce16578','dimce','dimitrije.milenkovic997@gmail.com','Srbija',1,20000,1),(3,'Nikola','Veljanovski','nikola_velja','velja','veljin.mail@gmail.com','Srbija',1,20000,1),(4,'Jelena','Ilic','cili97','cili','cili.mail@gmail.com','Srbija',1,20000,1);
-/*!40000 ALTER TABLE `korisnik` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Nikola','Kesic','nikola314','nikola','nikola.kesic97@gmail.com','Srbija',1,20000,1),(2,'Dimitrije','Milenkovic','dimce16578','dimce','dimitrije.milenkovic997@gmail.com','Srbija',1,20000,1),(3,'Nikola','Veljanovski','nikola_velja','velja','veljin.mail@gmail.com','Srbija',1,20000,1),(4,'Jelena','Ilic','cili97','cili','cili.mail@gmail.com','Srbija',1,20000,1);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `korisniksoba`
+-- Table structure for table `userRoom`
 --
 
-DROP TABLE IF EXISTS `korisniksoba`;
+DROP TABLE IF EXISTS `userRoom`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `korisniksoba` (
-  `idKorisnik` int(11) NOT NULL,
-  `idSoba` int(11) NOT NULL,
-  `Poeni` int(11) NOT NULL,
-  PRIMARY KEY (`idKorisnik`,`idSoba`),
-  KEY `fk_Korisnik_has_Soba_Soba1_idx` (`idSoba`),
-  KEY `fk_Korisnik_has_Soba_Korisnik_idx` (`idKorisnik`),
-  CONSTRAINT `fk_Korisnik_has_Soba_Korisnik` FOREIGN KEY (`idKorisnik`) REFERENCES `korisnik` (`idkorisnik`),
-  CONSTRAINT `fk_Korisnik_has_Soba_Soba1` FOREIGN KEY (`idSoba`) REFERENCES `soba` (`idsoba`)
+CREATE TABLE `userRoom` (
+  `idUser` int(11) NOT NULL,
+  `idRoom` int(11) NOT NULL,
+  `points` int(11) NOT NULL,
+  PRIMARY KEY (`idUser`,`idRoom`),
+  KEY `fk_Korisnik_has_Soba_Soba1_idx` (`idRoom`),
+  KEY `fk_Korisnik_has_Soba_Korisnik_idx` (`idUser`),
+  CONSTRAINT `fk_Korisnik_has_Soba_Korisnik` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`),
+  CONSTRAINT `fk_Korisnik_has_Soba_Soba1` FOREIGN KEY (`idRoom`) REFERENCES `room` (`idRoom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `korisniksoba`
+-- Dumping data for table `userRoom`
 --
 
-LOCK TABLES `korisniksoba` WRITE;
-/*!40000 ALTER TABLE `korisniksoba` DISABLE KEYS */;
-INSERT INTO `korisniksoba` VALUES (1,1,0),(2,1,0),(3,1,0);
-/*!40000 ALTER TABLE `korisniksoba` ENABLE KEYS */;
+LOCK TABLES `userRoom` WRITE;
+/*!40000 ALTER TABLE `userRoom` DISABLE KEYS */;
+INSERT INTO `userRoom` VALUES (1,1,0),(2,1,0),(3,1,0);
+/*!40000 ALTER TABLE `userRoom` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `liga`
+-- Table structure for table `league`
 --
 
-DROP TABLE IF EXISTS `liga`;
+DROP TABLE IF EXISTS `league`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `liga` (
-  `idLiga` int(11) NOT NULL AUTO_INCREMENT,
-  `Ime` varchar(20) NOT NULL,
-  `Sport` varchar(20) NOT NULL,
-  PRIMARY KEY (`idLiga`)
+CREATE TABLE `league` (
+  `idLeague` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `sport` varchar(20) NOT NULL,
+  PRIMARY KEY (`idLeague`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `liga`
+-- Dumping data for table `league`
 --
 
-LOCK TABLES `liga` WRITE;
-/*!40000 ALTER TABLE `liga` DISABLE KEYS */;
-INSERT INTO `liga` VALUES (1,'Champions League','Football'),(2,'Premier League','Football');
-/*!40000 ALTER TABLE `liga` ENABLE KEYS */;
+LOCK TABLES `league` WRITE;
+/*!40000 ALTER TABLE `league` DISABLE KEYS */;
+INSERT INTO `league` VALUES (1,'Champions League','Football'),(2,'Premier League','Football');
+/*!40000 ALTER TABLE `league` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `predikcija`
+-- Table structure for table `prediction`
 --
 
-DROP TABLE IF EXISTS `predikcija`;
+DROP TABLE IF EXISTS `prediction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `predikcija` (
-  `idPredikcija` int(11) NOT NULL AUTO_INCREMENT,
-  `Prognoza` char(1) NOT NULL,
-  `idUtakmica` int(11) NOT NULL,
-  `idKorisnik` int(11) NOT NULL,
-  `idSoba` int(11) NOT NULL,
-  PRIMARY KEY (`idPredikcija`),
-  KEY `fk_Predikcija_Utakmica1_idx` (`idUtakmica`),
-  KEY `fk_Predikcija_KorisnikSoba1_idx` (`idKorisnik`,`idSoba`),
-  CONSTRAINT `fk_Predikcija_KorisnikSoba1` FOREIGN KEY (`idKorisnik`, `idSoba`) REFERENCES `korisniksoba` (`idkorisnik`, `idsoba`) ON DELETE CASCADE,
-  CONSTRAINT `fk_Predikcija_Utakmica1` FOREIGN KEY (`idUtakmica`) REFERENCES `utakmica` (`idutakmica`) ON DELETE CASCADE
+CREATE TABLE `prediction` (
+  `idPrediction` int(11) NOT NULL AUTO_INCREMENT,
+  `predictedResult` char(1) NOT NULL,
+  `idGame` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
+  `idRoom` int(11) NOT NULL,
+  PRIMARY KEY (`idPrediction`),
+  KEY `fk_Predikcija_Utakmica1_idx` (`idGame`),
+  KEY `fk_Predikcija_KorisnikSoba1_idx` (`idUser`,`idRoom`),
+  CONSTRAINT `fk_Predikcija_KorisnikSoba1` FOREIGN KEY (`idUser`, `idRoom`) REFERENCES `userRoom` (`idUser`, `idRoom`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Predikcija_Utakmica1` FOREIGN KEY (`idGame`) REFERENCES `game` (`idGame`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `predikcija`
+-- Dumping data for table `prediction`
 --
 
-LOCK TABLES `predikcija` WRITE;
-/*!40000 ALTER TABLE `predikcija` DISABLE KEYS */;
-INSERT INTO `predikcija` VALUES (1,'1',1,1,1);
-/*!40000 ALTER TABLE `predikcija` ENABLE KEYS */;
+LOCK TABLES `prediction` WRITE;
+/*!40000 ALTER TABLE `prediction` DISABLE KEYS */;
+INSERT INTO `prediction` VALUES (1,'1',1,1,1);
+/*!40000 ALTER TABLE `prediction` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `soba`
+-- Table structure for table `room`
 --
 
-DROP TABLE IF EXISTS `soba`;
+DROP TABLE IF EXISTS `room`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `soba` (
-  `idSoba` int(11) NOT NULL AUTO_INCREMENT,
-  `Ime` varchar(20) NOT NULL,
-  `Vidljivost` tinyint(4) NOT NULL,
-  `NacinRaspodele` int(11) NOT NULL,
-  `NacinBodovanja` int(11) NOT NULL,
-  `Sport` int(11) NOT NULL,
-  `MinBrIgraca` int(11) NOT NULL,
-  `MaxBrIgraca` int(11) NOT NULL,
-  `Ulog` int(11) NOT NULL,
-  `DatumPocetka` datetime NOT NULL,
-  `DatumKraja` datetime NOT NULL,
-  `PoslednjiDanZaOdustajanje` datetime NOT NULL,
-  `Admin` int(11) NOT NULL,
-  PRIMARY KEY (`idSoba`),
-  KEY `fk_Soba_Korisnik1_idx` (`Admin`),
-  CONSTRAINT `fk_Soba_Korisnik1` FOREIGN KEY (`Admin`) REFERENCES `korisnik` (`idkorisnik`) ON DELETE CASCADE
+CREATE TABLE `room` (
+  `idRoom` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `visibility` tinyint(4) NOT NULL,
+  `distributionType` int(11) NOT NULL,
+  `scoringType` int(11) NOT NULL,
+  `sport` int(11) NOT NULL,
+  `minPlayers` int(11) NOT NULL,
+  `maxPlayers` int(11) NOT NULL,
+  `bet` int(11) NOT NULL,
+  `dateBegin` datetime NOT NULL,
+  `dateEnd` datetime NOT NULL,
+  `dateCancel` datetime NOT NULL,
+  `admin` int(11) NOT NULL,
+  PRIMARY KEY (`idRoom`),
+  KEY `fk_Soba_Korisnik1_idx` (`admin`),
+  CONSTRAINT `fk_Soba_Korisnik1` FOREIGN KEY (`admin`) REFERENCES `user` (`idUser`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `soba`
+-- Dumping data for table `room`
 --
 
-LOCK TABLES `soba` WRITE;
-/*!40000 ALTER TABLE `soba` DISABLE KEYS */;
-INSERT INTO `soba` VALUES (1,'Najjaca soba',1,1,1,1,1,4,500,'2019-06-01 12:00:00','2019-08-01 12:00:00','2019-05-29 12:00:00',1);
-/*!40000 ALTER TABLE `soba` ENABLE KEYS */;
+LOCK TABLES `room` WRITE;
+/*!40000 ALTER TABLE `room` DISABLE KEYS */;
+INSERT INTO `room` VALUES (1,'Najjaca room',1,1,1,1,1,4,500,'2019-06-01 12:00:00','2019-08-01 12:00:00','2019-05-29 12:00:00',1);
+/*!40000 ALTER TABLE `room` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `sobaliga`
+-- Table structure for table `roomLeague`
 --
 
-DROP TABLE IF EXISTS `sobaliga`;
+DROP TABLE IF EXISTS `roomLeague`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `sobaliga` (
-  `idLiga` int(11) NOT NULL,
-  `idSoba` int(11) NOT NULL,
-  PRIMARY KEY (`idLiga`,`idSoba`),
-  KEY `fk_Liga_has_Soba_Soba1_idx` (`idSoba`),
-  KEY `fk_Liga_has_Soba_Liga1_idx` (`idLiga`),
-  CONSTRAINT `fk_Liga_has_Soba_Liga1` FOREIGN KEY (`idLiga`) REFERENCES `liga` (`idliga`) ON DELETE CASCADE,
-  CONSTRAINT `fk_Liga_has_Soba_Soba1` FOREIGN KEY (`idSoba`) REFERENCES `soba` (`idsoba`) ON DELETE CASCADE
+CREATE TABLE `roomLeague` (
+  `idLeague` int(11) NOT NULL,
+  `idRoom` int(11) NOT NULL,
+  PRIMARY KEY (`idLeague`,`idRoom`),
+  KEY `fk_Liga_has_Soba_Soba1_idx` (`idRoom`),
+  KEY `fk_Liga_has_Soba_Liga1_idx` (`idLeague`),
+  CONSTRAINT `fk_Liga_has_Soba_Liga1` FOREIGN KEY (`idLeague`) REFERENCES `league` (`idLeague`) ON DELETE CASCADE,
+  CONSTRAINT `fk_Liga_has_Soba_Soba1` FOREIGN KEY (`idRoom`) REFERENCES `room` (`idRoom`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sobaliga`
+-- Dumping data for table `roomLeague`
 --
 
-LOCK TABLES `sobaliga` WRITE;
-/*!40000 ALTER TABLE `sobaliga` DISABLE KEYS */;
-INSERT INTO `sobaliga` VALUES (1,1),(2,1);
-/*!40000 ALTER TABLE `sobaliga` ENABLE KEYS */;
+LOCK TABLES `roomLeague` WRITE;
+/*!40000 ALTER TABLE `roomLeague` DISABLE KEYS */;
+INSERT INTO `roomLeague` VALUES (1,1),(2,1);
+/*!40000 ALTER TABLE `roomLeague` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `utakmica`
+-- Table structure for table `game`
 --
 
-DROP TABLE IF EXISTS `utakmica`;
+DROP TABLE IF EXISTS `game`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `utakmica` (
-  `idUtakmica` int(11) NOT NULL AUTO_INCREMENT,
-  `Tim1` varchar(20) NOT NULL,
-  `Tim2` varchar(20) NOT NULL,
-  `idLiga` int(11) NOT NULL,
-  `Datum` datetime NOT NULL,
-  PRIMARY KEY (`idUtakmica`),
-  KEY `fk_Utakmica_Liga1_idx` (`idLiga`),
-  CONSTRAINT `fk_Utakmica_Liga1` FOREIGN KEY (`idLiga`) REFERENCES `liga` (`idliga`) ON DELETE CASCADE
+CREATE TABLE `game` (
+  `idGame` int(11) NOT NULL AUTO_INCREMENT,
+  `team1` varchar(20) NOT NULL,
+  `team2` varchar(20) NOT NULL,
+  `idLeague` int(11) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`idGame`),
+  KEY `fk_Utakmica_Liga1_idx` (`idLeague`),
+  CONSTRAINT `fk_Utakmica_Liga1` FOREIGN KEY (`idLeague`) REFERENCES `league` (`idLeague`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `utakmica`
+-- Dumping data for table `game`
 --
 
-LOCK TABLES `utakmica` WRITE;
-/*!40000 ALTER TABLE `utakmica` DISABLE KEYS */;
-INSERT INTO `utakmica` VALUES (1,'Barcelona','Liverpool',1,'2019-07-07 21:00:00'),(2,'Mancheser City','Leicester',2,'2019-07-05 21:00:00');
-/*!40000 ALTER TABLE `utakmica` ENABLE KEYS */;
+LOCK TABLES `game` WRITE;
+/*!40000 ALTER TABLE `game` DISABLE KEYS */;
+INSERT INTO `game` VALUES (1,'Barcelona','Liverpool',1,'2019-07-07 21:00:00'),(2,'Mancheser City','Leicester',2,'2019-07-05 21:00:00');
+/*!40000 ALTER TABLE `game` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
