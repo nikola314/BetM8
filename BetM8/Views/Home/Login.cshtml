@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h3 class="text-danger">@ViewBag.message</h3>
+
+    <form action="~/Home/Login"  method="post">
+        <hr />
+        <fieldset>
+            <legend>Login</legend>
+            <div class="form-group">
+                <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary">Login</button>
+        </fieldset>
+    </form>
+</div>

@@ -11,6 +11,15 @@ namespace BetM8.Controllers
     {
         public db_betm8Entities db = new db_betm8Entities();
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -33,6 +42,27 @@ namespace BetM8.Controllers
         public ActionResult Users()
         {
             return View(db.users.ToList());
+        }
+
+        public ActionResult ShowLoginView()
+        {
+            return View("Login");
+        }
+
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            var user = db.users.Where(u => u.username == username && u.password == password).FirstOrDefault() as user;
+
+            Session["user"] = user;
+
+            if (user == null)
+            {
+                ViewBag.message = "Invalid username/password combination!";
+                return View("Login");
+            }
+
+            return RedirectToAction("Index", "users");
         }
     }
 }
