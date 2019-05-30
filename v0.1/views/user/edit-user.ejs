@@ -1,0 +1,39 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (currentUser) { %>
+        <form class="login-form" action="/edit-user" method="POST">
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input type="name" name="name" id="name" value="<%= currentUser.firstName %>">
+            </div>
+            <div class="form-control">
+                <label for="surname">Surname</label>
+                <input type="surname" name="surname" id="surname" value="<%= currentUser.lastName %>">
+            </div>
+            <div class="form-control">
+                <label for="username">Username</label>
+                <input type="username" name="username" id="username" readonly value="<%= currentUser.username %>">
+            </div>
+            <div class="form-control">
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email" value="<%= currentUser.mail %>">
+            </div>
+            <div class="form-control">
+                <label for="country">Country</label>
+                <%- include('../includes/countries.ejs') %>
+            </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit">Submit changes</button>
+            <a href="/change-password">Change password</a>
+        </form>
+        <% } else { %>
+            <h1>No user!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>

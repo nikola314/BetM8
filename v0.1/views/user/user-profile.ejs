@@ -1,0 +1,32 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <%- include('../includes/feedback-messages.ejs') %>
+        <% if (currentUser) { %>
+        <h1>Welcome, <%= currentUser.username %></h1>
+        <p>First Name: <%= currentUser.firstName %></p>
+        <p>Last Name: <%= currentUser.lastName %></p>
+        <p>E-mail: <%= currentUser.mail %></p>
+        <p>Country: <%= currentUser.country %></p>
+        <p>Type:
+            <% if (currentUser.type == 1) { %> Basic user <% } %>
+            <% if (currentUser.type == 2) { %> Admin <% } %>
+        </p>
+        <p>Money: <%= currentUser.money %> RSD</p>
+        <a href="/edit-user">Edit profile</a>
+        <form action="/add-money" method="GET">
+            <button type="submit">Add money</button>
+        </form>
+        <form action="/withdraw-money" method="GET">
+            <button type="submit">Withdraw money</button>
+        </form>
+        <% } else { %>
+        <h1>No user!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>
