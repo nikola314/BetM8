@@ -23,6 +23,10 @@ const Game = sequelize.define('game', {
   },
   result: {
     type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  isProcessed: {
+    type: Sequelize.INTEGER,
     allowNull: false
   }
 });

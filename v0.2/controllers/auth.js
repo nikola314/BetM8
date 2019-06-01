@@ -2,6 +2,8 @@ const User = require('../models/user');
 
 const bcrypt = require('bcryptjs');
 
+const Message = require('../models/message');
+
 const authController = require('../controllers/auth');
 
 const nodemailer = require('nodemailer');
@@ -51,7 +53,12 @@ exports.postLogin = (req, res, next) => {
                     if (matchResult) {
                         req.session.isLoggedIn = user.type;
                         req.session.user = user;
-                        return res.redirect('/');
+                        Message.findAll({
+                            where: { senderId: user.id }
+                        }).then(messages => {
+                            res.locals.newMessagesCnt = messages.length;
+                            return res.redirect('/');
+                        })
                     }
                     else {
                         req.flash('error', 'Invalid password!');

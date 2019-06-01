@@ -28,6 +28,9 @@
             <% } else { %>
             <% if (currentUser) { %>
             <li class="main-header__item">
+                <a class="<%= path === '/inbox' ? 'active' : '' %>" href="/inbox"><%= newMessagesCnt %></a>
+            </li>
+            <li class="main-header__item">
                 <a class="<%= path === '/user-profile' ? 'active' : '' %>"
                     href="/user-profile"><%= currentUser.username %></a>
             </li>

@@ -20,6 +20,10 @@ const Message = sequelize.define('message', {
   message: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  isRead: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 });
 
