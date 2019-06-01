@@ -1,0 +1,20 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (allMessages.length > 0) { for (let message of allMessages) { %>
+            <% if (message.senderId == 1) { %>
+            <h4>ADMIN MESSAGE</h4>
+            <% } %>
+            <h4>Sender: <%= message.senderName %></h4>
+            <h6>Text: <%= message.message %></h6>
+            <hr>
+        <% } } else { %>
+            <h1>Inbox empty</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>

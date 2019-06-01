@@ -1,0 +1,58 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/room-home' ? 'active' : '' %>" href="/room-home">Rooms</a>
+            </li>
+            <% if (isAuthenticated > 0) { %>
+
+            <%} if (isAuthenticated == 2) {%>
+            <li class="main-header__item">
+                <a class="<%= path === '/all-users' ? 'active' : '' %>" href="/all-users">All Users</a>
+            </li>
+            <% } %>
+        </ul>
+        <ul class="main-header__item-list">
+            <% if (isAuthenticated == 0 || isAuthenticated == undefined) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/register' ? 'active' : '' %>" href="/register">Register</a>
+            </li>
+            <% } else { %>
+            <% if (currentUser) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/inbox' ? 'active' : '' %>" href="/inbox"><%= newMessagesCnt %></a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/user-profile' ? 'active' : '' %>"
+                    href="/user-profile"><%= currentUser.username %></a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/my-rooms' ? 'active' : '' %>" href="/my-rooms">My Rooms</a>
+            </li>
+            <% } %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+        </li>
+    </ul>
+</nav>

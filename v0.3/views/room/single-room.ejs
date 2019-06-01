@@ -1,0 +1,59 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <%- include('../includes/feedback-messages.ejs') %>
+        <h1>Name: <%= room.name %></h1>
+        <form action="/leave-room-request" method="POST">
+            <button type="submit">Leave room</button>
+            <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+            <input type="hidden" name="latestLeave" value="<%= room.latestLeave %>" readonly>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+
+        <% if (allGames) { %>
+        <h1>All Games</h1>
+        <% for (let game of allGames) { %>
+        <h5><%= game.team1 %> VS <%= game.team2 %></h5>
+        <% if (roomUser) { %>
+        <form action="/make-prediction" method="POST">
+            <input type="submit" name="button" value="1">
+            <input type="submit" name="button" value="X">
+            <input type="submit" name="button" value="2">
+            <input type="hidden" name="roomId" value="<%= room.id %>">
+            <input type="hidden" name="gameId" value="<%= game.id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+        <% } %>
+        <hr>
+        <% }} else { %>
+        <h1>No games in this room</h1>
+        <% } %>
+        <h1>Leaderboard</h1>
+        <% if (userRooms) { %>
+        <% for (let i = 0; i < userRooms.length; i++) { %>
+        <h4><%= i+1 %>. <%= leaderboardUsers[i].username %> (<%=userRooms[i].points%> points)</h4>
+        <% } %>
+        <% } else { %>
+        <h4>No users in this room!</h4>
+        <% } %>
+        <hr>
+        <% if (pendingUsers.length > 0) { %>
+        <h1>Pending users</h1>
+        <% for (let i = 0; i < pendingUsers.length; i++) { %>
+        <h4><%= pendingUsers[i].username %></h4>
+            <form action="/handle-request" method="POST">
+                <input type="submit" name="button" value="Accept">
+                <input type="submit" name="button" value="Reject">
+                <input type="hidden" name="roomId" value="<%= room.id %>">
+                <input type="hidden" name="userId" value="<%= pendingUsers[i].id %>">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+        <% } %>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>
