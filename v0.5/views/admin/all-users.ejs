@@ -1,0 +1,201 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+	<%- include('../includes/navigation.ejs') %>
+
+	<%- include('../includes/feedback-messages.ejs') %>
+	
+	<h1>Ban user</h1>
+	<form action="/ban-user-by-name" method="POST">
+		<input type="text" name="username">
+		<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+		<button type="sumbimt">Ban by name</button>
+	</form>
+	
+    <!--<main>
+        <% if (allUsers.length > 0) { %>
+        <% for (let user of allUsers) { %>
+        <h1>Username: <%= user.username %></h1>
+        <h2>RSD <%= user.money %></h2>
+        <form action="/ban-user" method="POST">
+            <% if (user.type == 1) {%>
+            <button type="submit">Ban</button>
+            <% } if (user.type == 0) { %>
+            <button type="submit">Unban</button>
+            <% } %>
+            <% if (user.type == 2) { %>
+                <div><p>ADMIN</p></div>
+            <% } %>
+            <input type="hidden" name="banId" value="<%= user.id %>" readonly>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+        <% if (user.type != 2) { %>
+            <form action="/ban-roomcreate" method="POST">
+                <% if (user.canCreateRoom == 1) {%>
+                <button type="submit">Disable Room Create</button>
+                <% } if (user.canCreateRoom == 0) { %>
+                <button type="submit">Enable Room Create</button>
+                <% } %>
+                <input type="hidden" name="banId" value="<%= user.id %>" readonly>
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            </form>
+        <% } %>
+        <hr>
+        <% } %>
+        <% } else { %>
+        <h1>No Users Found!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %> -->
+	
+	
+	
+	
+	
+	<section class="bg-light" id="services" >
+      <div class="container">
+		
+		<% if (allUsers.length > 0) { %>
+
+				<div class="row">
+					<div class="col-lg-2 text-center">
+					</div>
+					<div class="col-lg-8 text-center">
+						<h1> List of all users </h1>
+					</div>
+					<div class="col-lg-2 text-center">
+					</div>
+				</div>
+				
+				
+				<div class = "row">
+					<div class="col-lg-12 text-center">
+						<hr>
+					</div>
+				</div>
+				
+				
+				<div class="row mt-5 ">
+					<div class="col-lg-1 text-center">
+					</div>
+					<div class="col-lg-4 text-center">
+						<h4> Username : </h4>
+					</div>
+					<div class="col-lg-2 text-center">
+						<h4> Money : </h4>
+					</div>
+					<div class="col-lg-4 text-center">
+						<h4> Action : </h4>
+					</div>
+					<div class="col-lg-1 text-center">
+					</div>
+				</div>
+				
+				<div class = "row">
+					<div class="col-lg-12 text-center">
+						<hr>
+					</div>
+				</div>
+				
+				<% for (let user of allUsers) { %>
+				
+				<div class="row mt-5 ">
+					<div class="col-lg-1 text-center">
+					</div>
+					<div class="col-lg-4 text-center">
+						<h5> <%= user.username %> </h5>
+					</div>
+					<div class="col-lg-2 text-center">
+						<h5> <%= user.money %> </h5>
+					</div>
+					<div class="col-lg-4 text-center">
+						<form action="/ban-user" method="POST">
+							<% if (user.type == 1) {%>
+								<button type="submit">Ban</button>
+							<% } if (user.type == 0) { %>
+								<button type="submit">Unban</button>
+							<% } %>
+							<% if (user.type == 2) { %>
+								<p>ADMIN</p>
+							<% } %>
+							<input type="hidden" name="banId" value="<%= user.id %>" readonly>
+							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+						</form>
+						
+						<% if (user.type != 2) { %>
+							<form action="/ban-roomcreate" method="POST">
+								<% if (user.canCreateRoom == 1) {%>
+									&nbsp; | &nbsp; 
+									<button type="submit">Disable Room Create</button>
+								<% } if (user.canCreateRoom == 0) { %>
+									&nbsp; | &nbsp;
+									<button type="submit">Enable Room Create</button>
+								<% } %>
+								<input type="hidden" name="banId" value="<%= user.id %>" readonly>
+								<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+							</form>
+						<% } %>
+					</div>
+					<div class="col-lg-1 text-center">
+					</div>
+				</div>
+			<% } %>
+        <% } else { %>
+			div class="row">
+					<div class="col-lg-2 text-center">
+					</div>
+					<div class="col-lg-8 text-center">
+						<h1> No users found! </h1>
+					</div>
+					<div class="col-lg-2 text-center">
+					</div>
+				</div>
+        <% } %>
+	   </div>
+    </section>
+	
+	<%- include('../includes/end.ejs') %>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <%- include('../includes/feedback-messages.ejs') %>
+        <% if (user) { if (user.canCreateRoom) {%>
+        <a href="/create-room">Create New Room</a>
+        <% } } %>
+        <% if (myRooms.length > 0) { %>
+        <% for (let room of myRooms) { %>
+        <h1>Name: <%= room.name %></h1>
+        <h4>Distribution type:
+            <% if (room.distributionType == 1) { %> Winner takes it all <% } %>
+            <% if (room.distributionType == 2) { %> 1st [50%] 2nd [30%] 3rd [20%] <% } %>
+            <% if (room.distributionType == 3) { %> 1st [70%] 2nd [20%] 3rd [10%] <% } %>
+        </h4>
+        <h4>Scoring type:
+            <% if (room.scoringType == 1) { %> No negative points for wrong predictions <% } %>
+            <% if (room.scoringType == 2) { %> 50% negative points for wrong prediction <% } %>
+            <% if (room.scoringType == 3) { %> 100% negative points for wrong prediciton <% } %>
+        </h4>
+        <h4>Sport:
+            <% if (room.sport == 1) { %> Football <% } %>
+            <% if (room.sport == 2) { %> Basketball <% } %>
+            <% if (room.sport == 3) { %> Tennis <% } %>
+        </h4>
+        <h4>Min players: <%= room.minPlayers %></h4>
+        <h4>Max players: <%= room.maxPlayers %></h4>
+        <h4>Entry fee: <%= room.entryFee %> RSD</h4>
+        <h4>Date begin: <%= room.dateBegin %></h4>
+        <h4>Date end: <%= room.dateEnd %></h4>
+        <h4>Latest leave: <%= room.latestLeave %></h4>
+        <form action="/single-room" method="GET">
+            <button type="submit">View room</button>
+            <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+            <hr>
+        </form>
+        <% } %>
+        <% } else { %>
+        <h1>No Rooms Found!</h1>
+        <% } %>
+    </main>
+    <%- include('../includes/end.ejs') %>

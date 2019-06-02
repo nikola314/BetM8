@@ -1,0 +1,56 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+
+    <!-- <main>
+        <h1><%= message %></h1>
+        <h2>Are you sure you want to leave the room?</h2>
+        <form action="/leave-room" method="POST">
+            <input type="submit" name="button" value="Yes">
+            <input type="submit" name="button" value="No">
+            <input type="hidden" name="refund" value="<%= refund %>" readonly>
+            <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+            <input type="hidden" name="latestLeave" value="<%= room.latestLeave %>" readonly>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+    </main> -->
+
+    <section class="bg-light" id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2><%= message %></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                </div>
+                <div class="col-lg-4 text-center">
+                    <form action="/leave-room" method="POST">
+                        <input type="submit" name="button" value="Yes" style="color:green">
+                        <input type="submit" name="button" value="No" style="color:red">
+                        <input type="hidden" name="refund" value="<%= refund %>" readonly>
+                        <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+                        <input type="hidden" name="latestLeave" value="<%= room.latestLeave %>" readonly>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    </form>
+                </div>
+                <div class="col-lg-4 text-center">
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </section>
+    <%- include('../includes/end.ejs') %>
