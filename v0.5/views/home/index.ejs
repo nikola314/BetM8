@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
+<link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
@@ -7,5 +7,16 @@
 
     <main>
         <h1>Index page</h1>
+
+        <h1>Today games</h1>
+        <% if (footballGames.length > 0) { for (let game of footballGames) { %>
+            <p><%= game.team1 %> VS <%= game.team2 %> <% if (game.result == null) { %> Not finished yet <%} else {%> <%= game.result %> <% } %></p>
+        <% } } %>
+        <% if (basketballGames.length > 0) { for (let game of basketballGames) { %>
+            <p><%= game.team1 %> VS <%= game.team2 %> <% if (game.result == null) { %> Not finished yet <%} else {%> <%= game.result %> <% } %></p>
+        <% } } %>
+        <% if (tennisGames.length > 0) { for (let game of tennisGames) { %>
+            <p><%= game.team1 %> VS <%= game.team2 %> <% if (game.result == null) { %> Not finished yet <%} else {%> <%= game.result %> <% } %></p>
+        <% } } %>
     </main>
-<%- include('../includes/end.ejs') %>
+    <%- include('../includes/end.ejs') %>
