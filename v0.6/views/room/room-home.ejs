@@ -1,0 +1,306 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <br/><br/><br/><br/>
+
+    <!-- <main>
+        <%- include('../includes/feedback-messages.ejs') %>
+        <% if (isAuthenticated > 0) { %>
+        <form action="/join-private-room-request" method="POST">
+            <h1>Join private rooms</h1>
+            <label for="roomname">Private room name</label>
+            <input type="text" name="roomname">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit">Join private room</button>
+            <hr>
+        </form>
+        <% } %>
+        <% if (user) { if (user.canCreateRoom) {%>
+        <a href="/create-room">Create New Room</a>
+        <% } %>
+        <% } %>
+
+
+        <% if (allRooms.length > 0) { %>
+        <% for (let room of allRooms) { if(room.visibility == 1) { %>
+        <h1>Name: <%= room.name %></h1>
+        <h4>Distribution type:
+            <% if (room.distributionType == 1) { %> Winner takes it all <% } %>
+            <% if (room.distributionType == 2) { %> 1st [50%] 2nd [30%] 3rd [20%] <% } %>
+            <% if (room.distributionType == 3) { %> 1st [70%] 2nd [20%] 3rd [10%] <% } %>
+        </h4>
+        <h4>Scoring type:
+            <% if (room.scoringType == 1) { %> No negative points for wrong predictions <% } %>
+            <% if (room.scoringType == 2) { %> 50% negative points for wrong prediction <% } %>
+            <% if (room.scoringType == 3) { %> 100% negative points for wrong prediciton <% } %>
+        </h4>
+        <h4>Sport:
+            <% if (room.sport == 1) { %> Football <% } %>
+            <% if (room.sport == 2) { %> Basketball <% } %>
+            <% if (room.sport == 3) { %> Tennis <% } %>
+        </h4>
+        <h4>Min players: <%= room.minPlayers %></h4>
+        <h4>Max players: <%= room.maxPlayers %></h4>
+        <h4>Entry fee: <%= room.entryFee %> RSD</h4>
+        <h4>Date begin: <%= room.dateBegin %></h4>
+        <h4>Date end: <%= room.dateEnd %></h4>
+        <h4>Latest leave: <%= room.latestLeave %></h4>
+        <form action="/join-room" method="POST">
+            <button type="submit">Join room</button>
+            <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <hr>
+        </form>
+        <% }} %>
+        <% } else { %>
+        <h1>No Rooms Found!</h1>
+        <% } %>
+    </main> -->
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <%- include('../includes/feedback-messages.ejs') %>
+                </div>
+
+            </div>
+
+
+
+
+            <% if (isAuthenticated > 0) { %>
+
+            <% if (allRooms.length > 0) { %>
+            <div class="row ">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-10 text-center">
+                    <h1> Public rooms </h1>
+                </div>
+
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Name </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Current(min/max) </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Money </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Sport </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <hr />
+                </div>
+
+            </div>
+            <% for (let room of allRooms) { if(room.visibility == 1) { %>
+
+            <div class="row">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4> <a href="single-room?roomId=<%= room.id %>"><%= room.name %></a> </h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4><%= room.membersCount %>(<%= room.minPlayers %>/<%= room.maxPlayers %>)</h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4><%= room.entryFee %></h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4>
+                        <% if (room.sport == 1) { %> Football <% } %>
+                        <% if (room.sport == 2) { %> Basketball <% } %>
+                        <% if (room.sport == 3) { %> Tennis <% } %>
+                    </h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <% if (isAuthenticated > 0) { %>
+                    <form action="/join-room" method="POST">
+                        <button type="submit">Join room</button>
+                        <input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <hr>
+                    </form>
+                    <% } else { %>
+                    <br /> <br />
+                    <% } %>
+                </div>
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+
+            <% }} %>
+            <% } else { %>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>No Rooms Found!</h1>
+                </div>
+            </div>
+            <% } %>
+
+            <% } else { %>
+            <% if (allRooms.length > 0) { %>
+            <div class="row ">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-10 text-center">
+                    <h1> Public rooms </h1>
+                </div>
+
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Name </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Current(min/max) </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Money </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h5> Sport </h5>
+                </div>
+                <div class="col-lg-2 text-center">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <hr />
+                </div>
+
+            </div>
+            <% for (let room of allRooms) { if(room.visibility == 1) { %>
+
+            <div class="row">
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4> <a href="single-room?roomId=<%= room.id %>"><%= room.name %></a> </h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4><%= room.membersCount %>(<%= room.minPlayers %>/<%= room.maxPlayers %>)</h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4><%= room.entryFee %></h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <h4>
+                        <% if (room.sport == 1) { %> Football <% } %>
+                        <% if (room.sport == 2) { %> Basketball <% } %>
+                        <% if (room.sport == 3) { %> Tennis <% } %>
+                    </h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                    <br/> <br/>
+                </div>
+            </div>
+
+            <% }} %>
+            <% } else { %>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>No Rooms Found!</h1>
+                </div>
+            </div>
+            <% } %>
+            <% } %>
+
+
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                </div>
+            </div>
+
+
+
+
+            <% if (isAuthenticated > 0) { %>
+
+            <div class="row mt-5">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-10 text-center">
+                    <h1> Join private rooms </h1>
+                </div>
+
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-1 text-center">
+                </div>
+                <div class="col-lg-10 text-center">
+                    <form name="formSearch" action="/join-private-room-request" method="POST">
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h5><label for="roomname">Private room name</label> </h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <input size="30" type="text" name="roomname">
+                            </div>
+                        </div>
+                        <div class="row mt-1">
+                            <div class="col-lg-12 text-center">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" name="Search">Join private
+                                    room</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-lg-1 text-center">
+                </div>
+            </div>
+
+            <% } %>
+
+
+            <div class="row mt-5 ">
+                <% if (user) { if (user.canCreateRoom) {%>
+
+                <div class="col-lg-12 text-center">
+                    <div class="row mt-5">
+                        <div class="col-lg-12 text-center">
+                            <h2><a href="/create-room">Create New Room</a></h2>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% } %>
+            </div>
+        </div>
+
+
+    <%- include('../includes/end.ejs') %>

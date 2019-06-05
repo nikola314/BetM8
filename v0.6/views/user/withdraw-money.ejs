@@ -1,0 +1,93 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/forms.css">
+<link rel="stylesheet" href="/css/auth.css">
+
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <br/><br/><br/><br/>
+
+    <!-- <main>
+        <%- include('../includes/feedback-messages.ejs') %>
+        <% if (currentUser) { %>
+        <form class="login-form" action="/withdraw-money" method="POST">
+            <h1>Your current balance is: <%= currentUser.money %> RSD</h1>
+            <h1>How much money to withrdraw?</h1>
+            <input type="number" name="moneyAmount">
+            
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="type" value="withdraw">
+            <button class="btn" type="submit">Withdraw</button>
+        </form>
+        <% } else { %>
+            <h1>No user!</h1>
+        <% } %>
+    </main> -->
+
+        <%- include('../includes/feedback-messages.ejs') %>
+        <% if (currentUser) { %>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-8 text-center">
+                    <h1>Your current balance is: <%= currentUser.money %> RSD</h1>
+                </div>
+                <div class="col-lg-2 text-center">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-8 text-center">
+                    <h2> Withdraw money </h2>
+                </div>
+                <div class="col-lg-2 text-center">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <hr>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2 text-center">
+                </div>
+                <div class="col-lg-8 text-center">
+                    <h4> How much money to withrdraw? </h4>
+                </div>
+                <div class="col-lg-2 text-center">
+                </div>
+            </div>
+            <form name="formAddMoney" action="/withdraw-money" method="POST">
+                <div class="row">
+                    <div class="col-lg-2 text-center">
+                    </div>
+                    <div class="col-lg-8 text-center">
+                        <input type="number" min="0" max="1000000" step="500" value="1000" name="moneyAmount"><br />
+                    </div>
+                    <div class="col-lg-2 text-center">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2 text-center">
+                    </div>
+                    <div class="col-lg-8 text-center">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="type" value="withdraw">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                    <div class="col-lg-2 text-center">
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+        <% } else { %>
+        <h1>No user!</h1>
+        <% } %>
+    <%- include('../includes/end.ejs') %>

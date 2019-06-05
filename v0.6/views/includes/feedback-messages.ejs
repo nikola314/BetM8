@@ -1,0 +1,8 @@
+<% if (errorMessage) { 
+    for (let errMsg of errorMessage) { %>
+<div class="user-message user-message--error"><%= errMsg %> </div><br/>
+<% }} %>
+<% if (infoMessage) { 
+    for (let infoMsg of infoMessage) { %>
+<div class="user-message user-message--info"><%= infoMsg %> </div><br/>
+<% }} %>

@@ -1,0 +1,134 @@
+<div class="backdrop"></div>
+<header class="main-header" id="page-top">
+    <!-- <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/room-home' ? 'active' : '' %>" href="/room-home">Rooms</a>
+            </li>
+            <% if (isAuthenticated > 0) { %>
+
+            <%} if (isAuthenticated == 2) {%>
+            <li class="main-header__item">
+                <a class="<%= path === '/all-users' ? 'active' : '' %>" href="/all-users">All Users</a>
+            </li>
+            <% } %>
+        </ul>
+        <ul class="main-header__item-list">
+            <% if (isAuthenticated == 0 || isAuthenticated == undefined) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/register' ? 'active' : '' %>" href="/register">Register</a>
+            </li>
+            <% } else { %>
+            <% if (currentUser) { %>
+            <li class="main-header__item">
+                <a class="<%= path === '/inbox' ? 'active' : '' %>" href="/inbox"><%= newMessagesCnt %></a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/user-profile' ? 'active' : '' %>"
+                    href="/user-profile"><%= currentUser.username %></a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/my-rooms' ? 'active' : '' %>" href="/my-rooms">My Rooms</a>
+            </li>
+            <% } %>
+            <li class="main-header__item">
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+            <% } %>
+        </ul>
+    </nav> -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" style="width: 20%;" href="#page-top"><img src="logo.png" class="img-responsive"
+                    style="width:30%">Bet M8</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <!--<i class="fa fa-bars"></i>-->
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ml-auto">
+                    <li class="nav-item">
+                        <!--<a class="nav-link" href="profile.html">My profile</a>-->
+                        <a class="nav-link <%= path === '/' ? 'bg-primary' : '' %>" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <!--<a class="nav-link js-scroll-trigger" href="rooms.html">Rooms</a>-->
+                        <a class="nav-link <%= path === '/room-home' ? 'bg-primary' : '' %>" href="/room-home">Rooms</a>
+                    </li>
+
+                    <% if (isAuthenticated > 0) { %>
+
+                    <%} if (isAuthenticated == 2) {%>
+                    <li class="nav-item">
+                        <!--<a class="nav-link js-scroll-trigger bg-primary" href="competitions.html">My competitions</a>-->
+                        <a class="nav-link <%= path === '/all-users' ? 'bg-primary' : '' %>" href="/all-users">All
+                            Users</a>
+                    </li>
+                    <% } %>
+
+                    <% if (isAuthenticated == 0 || isAuthenticated == undefined) { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/login' ? 'bg-primary' : '' %>" href="/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/register' ? 'bg-primary' : '' %>"
+                            href="/register">Register</a>
+                    </li>
+                    <% } else { %>
+                    <% if (currentUser) { %>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/inbox' ? 'bg-primary' : '' %>" href="/inbox">INBOX(<%= newMessagesCnt %>)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/user-profile' ? 'bg-primary' : '' %>"
+                            href="/user-profile"><%= currentUser.username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <%= path === '/my-rooms' ? 'bg-primary' : '' %>" href="/my-rooms">My
+                            Rooms</a>
+                    </li>
+                    <% } %>
+                    <li class="nav-item">
+                        <form class="" action="/logout" method="post">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="nav-link" style="background-color: transparent;"
+                                type="submit">LOGOUT</button>
+                        </form>
+                    </li>
+                    <% } %>
+
+                    <!--<li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="results.html">Results</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="login.html">Log out</a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+
+</header>
+
+<!-- <nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+        </li>
+    </ul>
+</nav> -->
