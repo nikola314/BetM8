@@ -63,16 +63,16 @@ exports.postCreateRoom = (req, res, next) => {
     const today = new Date();
     let sportName;
 
-    if(sport==constants.SPORT_FOOTBALL){
-        sportName='Football';
+    if (sport == constants.SPORT_FOOTBALL) {
+        sportName = 'Football';
     }
-    else if(sport==constants.SPORT_BASKETBALL){
-        sportName='Basketball';
+    else if (sport == constants.SPORT_BASKETBALL) {
+        sportName = 'Basketball';
     }
-    else if(sport==constants.SPORT_TENNIS){
-        sportName='Tennis';
+    else if (sport == constants.SPORT_TENNIS) {
+        sportName = 'Tennis';
     }
-        Room.findOne({
+    Room.findOne({
         where: { name: name }
     }).then(roomDoc => {
         let redirect = false;
@@ -191,6 +191,8 @@ exports.getSingleRoom = (req, res, next) => {
     const userId = req.session.user ? req.session.user.id : 0;
     const leaderboardUsers = [];
     let roomOwnerId = null;
+    const today = new Date();
+    let roomStarted = false;
 
     if (!roomId) {
         req.flash('error', 'No room id specified!');
@@ -206,6 +208,7 @@ exports.getSingleRoom = (req, res, next) => {
             return res.redirect('/room-home');
         }
         else {
+            if (room.dateBegin < today) roomStarted = true;
             roomOwnerId = room.userId;
             let promises = [];
 
@@ -283,6 +286,7 @@ exports.getSingleRoom = (req, res, next) => {
                                                 userRooms: userrooms,
                                                 pendingUsers: pendingUsers,
                                                 leaderboardUsers: leaderboardUsers,
+                                                roomStarted: roomStarted,
                                                 errorMessage: req.flash('error'),
                                                 infoMessage: req.flash('info')
                                             })
@@ -298,6 +302,7 @@ exports.getSingleRoom = (req, res, next) => {
                                         userRooms: userrooms,
                                         pendingUsers: new Array(),
                                         leaderboardUsers: leaderboardUsers,
+                                        roomStarted: roomStarted,
                                         errorMessage: req.flash('error'),
                                         infoMessage: req.flash('info')
                                     })
@@ -328,28 +333,41 @@ exports.postLeaveRoomReq = (req, res, next) => {
         message = 'If you leave the room, you will not be refunded!';
         refund = false;
     }
-    Room.findOne({
+    UserRoom.findOne({
         where: {
-            id: roomId
+            roomId: roomId,
+            userId: req.session.user.id
         }
-    }).then(room => {
-        if (!room) {
-            req.flash('error', 'Room not found!');
-            return res.redirect('/room-home');
-        }
-        if (room.userId == req.session.user.id) {
-            req.flash('error', 'You are creator of this room! You can\'t leave it!');
-            return res.redirect('/room-home');
+    }).then(userroom => {
+        if (!userroom) {
+            req.flash('error', 'You are not in this room!');
+            return res.redirect('/single-room?roomId=' + roomId);
         }
         else {
-            return res.render('room/popup', {
-                pageTitle: 'Popup',
-                path: '/popup',
-                message: message,
-                refund: refund,
-                room: room,
-                errorMessage: req.flash('error'),
-                infoMessage: req.flash('info')
+            Room.findOne({
+                where: {
+                    id: roomId
+                }
+            }).then(room => {
+                if (!room) {
+                    req.flash('error', 'Room not found!');
+                    return res.redirect('/room-home');
+                }
+                if (room.userId == req.session.user.id) {
+                    req.flash('error', 'You are creator of this room! You can\'t leave it!');
+                    return res.redirect('/room-home');
+                }
+                else {
+                    return res.render('room/popup', {
+                        pageTitle: 'Popup',
+                        path: '/popup',
+                        message: message,
+                        refund: refund,
+                        room: room,
+                        errorMessage: req.flash('error'),
+                        infoMessage: req.flash('info')
+                    })
+                }
             })
         }
     })
@@ -408,31 +426,45 @@ exports.postMakePrediction = (req, res, next) => {
     let prediction = req.body.button;
     if (prediction == 'X') prediction = 3;
 
-    Prediction.findOne({
+    UserRoom.findOne({
         where: {
-            userId: userId,
-            gameId: gameId
+            roomId: roomId,
+            userId: req.session.user.id
         }
-    }).then(oldPrediction => {
-        if (oldPrediction) {
-            oldPrediction.result = prediction;
-            oldPrediction.save().then(result => {
-                req.flash('error', 'Old prediction has been overwritten');
-                req.flash('info', 'Prediction for game [' + gameId + '] have been saved successfully');
-                return res.redirect('/single-room?roomId=' + roomId);
-            })
+    }).then(userroom => {
+        if (!userroom) {
+            req.flash('error', 'Only room members can make predictions!');
+            return res.redirect('/single-room?roomId=' + roomId);
         }
         else {
-            Prediction.create({
-                result: prediction,
-                userId: userId,
-                gameId: gameId,
-                roomId: roomId
-            }).then(prediction => {
-                req.flash('info', 'Prediction for game [' + gameId + '] have been saved successfully');
-                return res.redirect('/single-room?roomId=' + roomId);
-            }).catch(err => {
-                console.log(err);
+            Prediction.findOne({
+                where: {
+                    userId: userId,
+                    gameId: gameId,
+                    roomId: roomId
+                }
+            }).then(oldPrediction => {
+                if (oldPrediction) {
+                    oldPrediction.result = prediction;
+                    oldPrediction.save().then(result => {
+                        req.flash('error', 'Old prediction has been overwritten');
+                        req.flash('info', 'Prediction for game [' + gameId + '] have been saved successfully');
+                        return res.redirect('/single-room?roomId=' + roomId);
+                    })
+                }
+                else {
+                    Prediction.create({
+                        result: prediction,
+                        userId: userId,
+                        gameId: gameId,
+                        roomId: roomId
+                    }).then(prediction => {
+                        req.flash('info', 'Prediction for game [' + gameId + '] have been saved successfully');
+                        return res.redirect('/single-room?roomId=' + roomId);
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                }
             })
         }
     })

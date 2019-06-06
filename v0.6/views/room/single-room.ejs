@@ -4,7 +4,7 @@
 
 <body>
 	<%- include('../includes/navigation.ejs') %>
-	<br/><br/><br/><br/>
+	<br /><br /><br /><br />
 
 	<!-- <main>
         <%- include('../includes/feedback-messages.ejs') %>
@@ -61,238 +61,300 @@
     <%- include('../includes/end.ejs') %>      -->
 
 
-		<div class="container">
-			<%- include('../includes/feedback-messages.ejs') %>
-			<div class="row" style="background-color: #fed136">
-				<div class="col-lg-4 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h1><%= room.name %></h1>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-2 text-center mt-2">
-					<% if (isAuthenticated > 0) { %>
-						<form action="/leave-room-request" method="POST">
-							<button type="submit">Leave room</button>
-							<input type="hidden" name="roomId" value="<%= room.id %>" readonly>
-							<input type="hidden" name="latestLeave" value="<%= room.latestLeave %>" readonly>
+	<div class="container">
+		<%- include('../includes/feedback-messages.ejs') %>
+		<div class="row" style="background-color: #fed136">
+			<div class="col-lg-2 text-center">
+			</div>
+			<div class="col-lg-8 text-center">
+				<h1><%= room.name %></h1>
+				<h6>Distribution type:
+					<% if (room.distributionType == 1) { %> Winner takes it all <% } %>
+					<% if (room.distributionType == 2) { %> 1st [50%] 2nd [30%] 3rd [20%] <% } %>
+					<% if (room.distributionType == 3) { %> 1st [70%] 2nd [20%] 3rd [10%] <% } %>
+				</h6>
+				<h6>Scoring type:
+					<% if (room.scoringType == 1) { %> No negative points for wrong predictions <% } %>
+					<% if (room.scoringType == 2) { %> 50% negative points for wrong prediction <% } %>
+					<% if (room.scoringType == 3) { %> 100% negative points for wrong prediciton <% } %>
+				</h6>
+				<h6>Sport:
+					<% if (room.sport == 1) { %> Football <% } %>
+					<% if (room.sport == 2) { %> Basketball <% } %>
+					<% if (room.sport == 3) { %> Tennis <% } %>
+				</h6>
+			</div>
+			<div class="col-lg-2 text-center mt-2">
+				<% if (roomUser && isAuthenticated) { %>
+				<form action="/leave-room-request" method="POST">
+					<button type="submit">Leave room</button>
+					<input type="hidden" name="roomId" value="<%= room.id %>" readonly>
+					<input type="hidden" name="latestLeave" value="<%= room.latestLeave %>" readonly>
+					<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+				</form>
+				<% }%>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr />
+			</div>
+		</div>
+
+		<% if (roomStarted) { %>
+		<% if (allGames && allGames.length > 0 ) { %>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h3>All Games</h3>
+			</div>
+		</div>
+
+		<% if (roomUser) { %>
+		<div class="row mt-5">
+			<div class="col-lg-1 text-center">
+			</div>
+			<div class="col-lg-3 text-center">
+				<h4>Home team</h4>
+			</div>
+			<div class="col-lg-1 text-center">
+				<h4>-</h4>
+			</div>
+			<div class="col-lg-3 text-center">
+				<h4>Away team</h4>
+			</div>
+			<div class="col-lg-3 text-center">
+				<h4>Prediction</h4>
+			</div>
+			<div class="col-lg-1 text-center">
+			</div>
+		</div>
+		<% } else { %>
+		<div class="row mt-5">
+			<div class="col-lg-2 text-center">
+			</div>
+			<div class="col-lg-3 text-center">
+				<h4>Home team</h4>
+			</div>
+			<div class="col-lg-2 text-center">
+				<h4>-</h4>
+			</div>
+			<div class="col-lg-3 text-center">
+				<h4>Away team</h4>
+			</div>
+			<div class="col-lg-2 text-center">
+			</div>
+		</div>
+		<% } %>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+		<% for (let game of allGames) { %>
+		<% if (roomUser) { %>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="row">
+					<div class="col-lg-1 text-center">
+					</div>
+
+					<div class="col-lg-3 text-center">
+						<%= game.team1 %>
+					</div>
+
+					<div class="col-lg-1 text-center">
+						-
+					</div>
+
+					<div class="col-lg-3 text-center">
+						<%= game.team2 %>
+					</div>
+
+					<div class="col-lg-3 text-center">
+						<% if (roomUser) { %>
+						<form action="/make-prediction" method="POST">
+							<input type="submit" name="button" value="1">
+							<input type="submit" name="button" value="X">
+							<input type="submit" name="button" value="2">
+							<input type="hidden" name="roomId" value="<%= room.id %>">
+							<input type="hidden" name="gameId" value="<%= game.id %>">
 							<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 						</form>
-					<% } %>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr />
-				</div>
-			</div>
-
-			<% if (allGames && allGames.length > 0) { %>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h3>All Games</h3>
-				</div>
-			</div>
-
-
-			<div class="row mt-5">
-				<div class="col-lg-1 text-center">
-				</div>
-				<div class="col-lg-3 text-center">
-					<h4>Home team</h4>
-				</div>
-				<div class="col-lg-1 text-center">
-					<h4>-</h4>
-				</div>
-				<div class="col-lg-3 text-center">
-					<h4>Away team</h4>
-				</div>
-				<div class="col-lg-3 text-center">
-					<h4>Prediction</h4>
-				</div>
-				<div class="col-lg-1 text-center">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-			<% for (let game of allGames) { %>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="row">
-						<div class="col-lg-1 text-center">
-						</div>
-
-						<div class="col-lg-3 text-center">
-							<%= game.team1 %>
-						</div>
-
-						<div class="col-lg-1 text-center">
-							-
-						</div>
-
-						<div class="col-lg-3 text-center">
-							<%= game.team2 %>
-						</div>
-
-						<div class="col-lg-3 text-center">
-							<% if (roomUser) { %>
-							<form action="/make-prediction" method="POST">
-								<input type="submit" name="button" value="1">
-								<input type="submit" name="button" value="X">
-								<input type="submit" name="button" value="2">
-								<input type="hidden" name="roomId" value="<%= room.id %>">
-								<input type="hidden" name="gameId" value="<%= game.id %>">
-								<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-							</form>
-							<% } %>
-						</div>
-						<div class="col-lg-1 text-center">
-						</div>
+						<% } %>
+					</div>
+					<div class="col-lg-1 text-center">
 					</div>
 				</div>
 			</div>
-			<% } %>
-			<% } else { %>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h3>No games in this room</h3>
-				</div>
-			</div>
-			<% } %>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-
-			<% if (userRooms) { %>
-			<div class="row mt-5">
-				<div class="col-lg-1 text-center">
-				</div>
-				<div class="col-lg-3 text-center">
-					<h3> Position </h3>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h3> Player name </h3>
-				</div>
-				<div class="col-lg-3 text-center">
-					<h3> Points </h3>
-				</div>
-				<div class="col-lg-1 text-center">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-			<% for (let i = 0; i < userRooms.length; i++) { %>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<div class="row">
-						<div class="col-lg-1 text-center">
-						</div>
-						<div class="col-lg-3 text-center">
-							<h4> <%= i+1 %>. </h4>
-						</div>
-						<div class="col-lg-4 text-center">
-							<h4> <%= leaderboardUsers[i].username %> </h4>
-						</div>
-						<div class="col-lg-3 text-center">
-							<h4> <%=userRooms[i].points%> points </h4>
-						</div>
-						<div class="col-lg-1 text-center">
-						</div>
-					</div>
-				</div>
-			</div>
-			<% } %>
-			<% } else { %>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h4>No users in this room!</h4>
-				</div>
-			</div>
-			<% } %>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-
-
-			<% if (pendingUsers.length > 0) { %>
-			<div class="row">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-8 text-center">
-					<h1> Accept/Reject new users </h1>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-			<div class="row mt-2 ">
-				<div class="col-lg-3 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Username : </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-					<h4> Action : </h4>
-				</div>
-				<div class="col-lg-3 text-center">
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-
-			<% for (let i = 0; i < pendingUsers.length; i++) { %>
-			<div class="row mt-2">
-				<div class="col-lg-3 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h5><%= pendingUsers[i].username %></h5>
-				</div>
-				<div class="col-lg-2 text-center">
-					<form action="/handle-request" method="POST">
-						<input type="submit" name="button" value="Accept">
-						&nbsp; | &nbsp;
-						<input type="submit" name="button" value="Reject">
-						<input type="hidden" name="roomId" value="<%= room.id %>">
-						<input type="hidden" name="userId" value="<%= pendingUsers[i].id %>">
-						<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-					</form>
-				</div>
-				<div class="col-lg-3 text-center">
-				</div>
-			</div>
-			<% } %>
-			<% } %>
-
 		</div>
+		<% } else {%>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="row">
+					<div class="col-lg-2 text-center">
+					</div>
+
+					<div class="col-lg-3 text-center">
+						<%= game.team1 %>
+					</div>
+
+					<div class="col-lg-2 text-center">
+						-
+					</div>
+
+					<div class="col-lg-3 text-center">
+						<%= game.team2 %>
+					</div>
+
+					<div class="col-lg-2 text-center">
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } }%>
+		<% } else { %>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h3>No games in this room</h3>
+			</div>
+		</div>
+		<% } } else {%>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h3>Starting time: <%= room.dateBegin %></h3>
+			</div>
+		</div>
+		<% } %>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+
+		<% if (userRooms) { %>
+		<div class="row mt-5">
+			<div class="col-lg-1 text-center">
+			</div>
+			<div class="col-lg-3 text-center">
+				<h3> Position </h3>
+			</div>
+			<div class="col-lg-4 text-center">
+				<h3> Player name </h3>
+			</div>
+			<div class="col-lg-3 text-center">
+				<h3> Points </h3>
+			</div>
+			<div class="col-lg-1 text-center">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+		<% for (let i = 0; i < userRooms.length; i++) { %>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<div class="row">
+					<div class="col-lg-1 text-center">
+					</div>
+					<div class="col-lg-3 text-center">
+						<h4> <%= i+1 %>. </h4>
+					</div>
+					<div class="col-lg-4 text-center">
+						<h4> <%= leaderboardUsers[i].username %> </h4>
+					</div>
+					<div class="col-lg-3 text-center">
+						<h4> <%=userRooms[i].points%> points </h4>
+					</div>
+					<div class="col-lg-1 text-center">
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } %>
+		<% } else { %>
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<h4>No users in this room!</h4>
+			</div>
+		</div>
+		<% } %>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+
+
+		<% if (pendingUsers.length > 0) { %>
+		<div class="row">
+			<div class="col-lg-2 text-center">
+			</div>
+			<div class="col-lg-8 text-center">
+				<h1> Accept/Reject new users </h1>
+			</div>
+			<div class="col-lg-2 text-center">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+		<div class="row mt-2 ">
+			<div class="col-lg-3 text-center">
+			</div>
+			<div class="col-lg-4 text-center">
+				<h4> Username : </h4>
+			</div>
+			<div class="col-lg-2 text-center">
+				<h4> Action : </h4>
+			</div>
+			<div class="col-lg-3 text-center">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-12 text-center">
+				<hr>
+			</div>
+		</div>
+
+		<% for (let i = 0; i < pendingUsers.length; i++) { %>
+		<div class="row mt-2">
+			<div class="col-lg-3 text-center">
+			</div>
+			<div class="col-lg-4 text-center">
+				<h5><%= pendingUsers[i].username %></h5>
+			</div>
+			<div class="col-lg-2 text-center">
+				<form action="/handle-request" method="POST">
+					<input type="submit" name="button" value="Accept">
+					&nbsp; | &nbsp;
+					<input type="submit" name="button" value="Reject">
+					<input type="hidden" name="roomId" value="<%= room.id %>">
+					<input type="hidden" name="userId" value="<%= pendingUsers[i].id %>">
+					<input type="hidden" name="_csrf" value="<%= csrfToken %>">
+				</form>
+			</div>
+			<div class="col-lg-3 text-center">
+			</div>
+		</div>
+		<% } %>
+		<% } %>
+
+	</div>
 	<%- include('../includes/end.ejs') %>

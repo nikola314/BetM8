@@ -3,7 +3,18 @@
  * Copyright 2013-2018 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-agency/blob/master/LICENSE)
  */
-body {
+
+ .custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.select-selected {
+}
+
+
+
+ body {
   overflow-x: hidden;
   font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }

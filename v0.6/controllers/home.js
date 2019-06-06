@@ -17,6 +17,9 @@ exports.getIndex = (req, res, next) => {
   today.setHours(0,0,0,0);
   tomorrow.setDate(today.getDate() + 1);
   tomorrow.setHours(0,0,0,0);
+  today.setHours(today.getHours() + 2);
+  tomorrow.setHours(tomorrow.getHours() + 2);
+  
 
   League.findAll({
     where: {
