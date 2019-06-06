@@ -1,12 +1,18 @@
+<!-- 
+	Authors:
+  		-Nikola Veljanovski
+		-Jelena Ilic
+-->
+
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-</head>
+    <link rel="stylesheet" href="/css/forms.css">
+    </head>
 
-<body>
-	<%- include('../includes/navigation.ejs') %>
-	<br/><br/><br/><br/>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <br/><br/><br/><br/>
 
-	<!--<main>
+            <!--<main>
         <%- include('../includes/feedback-messages.ejs') %>
         <% if (currentUser) { %>
         <h1>Welcome, <%= currentUser.username %></h1>
@@ -38,170 +44,183 @@
 
 
 
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<%- include('../includes/feedback-messages.ejs') %>
-				</div>
-			</div>
-			<% if (currentUser) { %>
-			<div class="row">
-				<div class="mt-2 col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<form action="/withdraw-money" method="GET">
-						<!-- <button type="submit"><h3> Withdraw money </h3></button> -->
-						<a href="withdraw-money?userId=<%= user.id %>">
-							<h3> Withdraw money </h3>
-						</a>
-					</form>
-				</div>
-				<div class="col-lg-4 text-center">
-					<form action="/add-money" method="GET">
-						<!-- <button type="submit"><h3> Add money </h3></button> -->
-						<a href="add-money?userId=<%= user.id %>">
-							<h3> Add money </h3>
-						</a>
-					</form>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <%- include('../includes/feedback-messages.ejs') %>
+                    </div>
+                </div>
+                <% if (currentUser) { %>
+                    <div class="row">
+                        <div class="mt-2 col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <form action="/withdraw-money" method="GET">
+                                <!-- <button type="submit"><h3> Withdraw money </h3></button> -->
+                                <a href="withdraw-money?userId=<%= user.id %>">
+                                    <h3> Withdraw money </h3>
+                                </a>
+                            </form>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <form action="/add-money" method="GET">
+                                <!-- <button type="submit"><h3> Add money </h3></button> -->
+                                <a href="add-money?userId=<%= user.id %>">
+                                    <h3> Add money </h3>
+                                </a>
+                            </form>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
 
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h4> Personal data </h4>
-				</div>
-			</div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <h4> Personal data </h4>
+                        </div>
+                    </div>
 
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> First name </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.firstName %> </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Last name </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.lastName %> </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Username </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.username %> </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Email </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.mail %> </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Country </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.country %> </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> First name </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.firstName %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> Last name </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.lastName %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> Username </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.username %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> Email </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.mail %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> Country </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.country %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
 
 
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> Type </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4>
-						<% if (currentUser.type == 1) { %> Basic user <% } %>
-						<% if (currentUser.type == 2) { %> Admin <% } %>
-					</h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> Type </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <% if (currentUser.type == 1) { %> Basic user
+                                    <% } %>
+                                        <% if (currentUser.type == 2) { %> Admin
+                                            <% } %>
+                            </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
 
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> My balans </h4>
-				</div>
-				<div class="col-lg-4 text-center">
-					<h4> <%= currentUser.money %> RSD </h4>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4> My balans </h4>
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <h4>
+                                <%= currentUser.money %> RSD </h4>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
 
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                        </div>
+                    </div>
 
-			<div class="row mt-5">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-4 text-center">
-					<a href="/edit-user">
-						<h3>Edit profile</h3>
-					</a>
-				</div>
+                    <div class="row mt-5">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-4 text-center">
+                            <a href="/edit-user">
+                                <h3>Edit profile</h3>
+                            </a>
+                        </div>
 
-				<div class="col-lg-4 text-center">
-					<a href="/change-password">
-						<h3> Change password </h3>
-					</a>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
+                        <div class="col-lg-4 text-center">
+                            <a href="/change-password">
+                                <h3> Change password </h3>
+                            </a>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
 
-			<% } else { %>
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h2> No user! </h2>
-				</div>
-			</div>
-			<% } %>
+                    <% } else { %>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2> No user! </h2>
+                            </div>
+                        </div>
+                        <% } %>
 
-		</div>
+            </div>
 
-	<%- include('../includes/end.ejs') %>
+            <%- include('../includes/end.ejs') %>

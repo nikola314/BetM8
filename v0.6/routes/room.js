@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const express = require('express');
 
 const roomController = require('../controllers/room');

@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const User = require('../models/user');
 
 const bcrypt = require('bcryptjs');
@@ -52,8 +58,7 @@ exports.postUserProfile = (req, res, next) => {
                     return res.redirect('/user-profile');
                 })
                 .catch(err => console.log(err));
-        }
-        else {
+        } else {
             req.flash('error', 'Payment not successful!');
             return res.redirect('/user-profile');
         }
@@ -115,9 +120,7 @@ exports.postChangePassword = (req, res, next) => {
     if (newPassword != repeatPassword) {
         req.flash('error', 'Passwords do not match!');
         return res.redirect('/change-password');
-    }
-
-    else {
+    } else {
         bcrypt.compare(oldPassword, req.session.user.password).then(matchResult => {
             if (matchResult) {
                 User.findByPk(req.session.user.id)
@@ -132,8 +135,7 @@ exports.postChangePassword = (req, res, next) => {
                         return res.redirect('/');
                     })
                     .catch(err => console.log(err));
-            }
-            else {
+            } else {
                 req.flash('error', 'Incorrect old password!');
                 return res.redirect('/change-password');
             }
@@ -212,7 +214,7 @@ exports.getInbox = (req, res, next) => {
         for (let msg of messages) {
             msg.isRead = 1;
             msg.save();
-            promises.push(User.findByPk(msg.senderId).then(user=>{
+            promises.push(User.findByPk(msg.senderId).then(user => {
                 msg.senderName = user.username;
             }));
         }

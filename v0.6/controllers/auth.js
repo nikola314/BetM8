@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const User = require('../models/user');
 
 const bcrypt = require('bcryptjs');
@@ -39,37 +45,34 @@ exports.postLogin = (req, res, next) => {
     User.findOne({
         where: { username: username }
     }).
-        then(user => {
-            if (!user) {
-                req.flash('error', 'Username doesn\'t exist');
-                return res.redirect('/login');
-            }
-            else if (user.type == 0) {
-                req.flash('error', 'You are banned!');
-                return res.redirect('/login');
-            }
-            else {
-                bcrypt.compare(password, user.password).then(matchResult => {
-                    if (matchResult) {
-                        req.session.isLoggedIn = user.type;
-                        req.session.user = user;
-                        Message.findAll({
-                            where: {
-                                receiverId: user.id,
-                                isRead: 0
-                            }
-                        }).then(messages => {
-                            req.session.newMessagesCnt = messages.length;
-                            return res.redirect('/');
-                        })
-                    }
-                    else {
-                        req.flash('error', 'Invalid password!');
-                        return res.redirect('/login');
-                    }
-                }).catch(err => console.log(err));
-            }
-        }).catch(err => console.log(err));
+    then(user => {
+        if (!user) {
+            req.flash('error', 'Username doesn\'t exist');
+            return res.redirect('/login');
+        } else if (user.type == 0) {
+            req.flash('error', 'You are banned!');
+            return res.redirect('/login');
+        } else {
+            bcrypt.compare(password, user.password).then(matchResult => {
+                if (matchResult) {
+                    req.session.isLoggedIn = user.type;
+                    req.session.user = user;
+                    Message.findAll({
+                        where: {
+                            receiverId: user.id,
+                            isRead: 0
+                        }
+                    }).then(messages => {
+                        req.session.newMessagesCnt = messages.length;
+                        return res.redirect('/');
+                    })
+                } else {
+                    req.flash('error', 'Invalid password!');
+                    return res.redirect('/login');
+                }
+            }).catch(err => console.log(err));
+        }
+    }).catch(err => console.log(err));
 };
 
 exports.getLogout = (req, res, next) => {
@@ -94,8 +97,8 @@ exports.postRegister = (req, res, next) => {
     // Cili
 
     User.findOne({
-        where: { username: username }
-    })
+            where: { username: username }
+        })
         .then(userDoc => {
             let redirect = false;
             if (userDoc) {

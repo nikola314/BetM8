@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const path = require('path');
 
 const express = require('express');

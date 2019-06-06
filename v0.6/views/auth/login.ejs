@@ -1,14 +1,20 @@
+<!-- 
+	Authors:
+  		-Nikola Veljanovski
+		-Jelena Ilic
+-->
+
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
 
-</head>
+    </head>
 
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <br/><br/><br/><br/>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <br/><br/><br/><br/>
 
-    <!-- <main>
+            <!-- <main>
         <%- include('../includes/feedback-messages.ejs') %>
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
@@ -27,37 +33,37 @@
     </main> -->
 
 
-        <%- include('../includes/feedback-messages.ejs') %>
-        <div class="container ">
-            <div class="row">
-                <div class="col-lg-3 text-center">
-                </div>
-                <div class="col-lg-6 text-center">
-                    <form action="/login" method="POST">
-                        <h1 >Login</h1>
-                        <p>Please enter your username and password</p>
-                        <hr>
-                        <div class="form-group">
-                            <label for="user">Username:</label>
-                            <input type="text" class="form-control" name="username" id="user">
+            <%- include('../includes/feedback-messages.ejs') %>
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-lg-3 text-center">
                         </div>
+                        <div class="col-lg-6 text-center">
+                            <form action="/login" method="POST">
+                                <h1>Login</h1>
+                                <p>Please enter your username and password</p>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="user">Username:</label>
+                                    <input type="text" class="form-control" name="username" id="user">
+                                </div>
 
-                        <div class="form-group">
-                            <label for="pass">Password:</label>
-                            <input type="password" class="form-control" name="password" id="pass">
-                        </div>
-                        <label>
+                                <div class="form-group">
+                                    <label for="pass">Password:</label>
+                                    <input type="password" class="form-control" name="password" id="pass">
+                                </div>
+                                <label>
                             <input type="checkbox" checked="checked" name="remember"> Remember me
                         </label>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button type="submit" class="btn btn-primary">Login</button>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="btn btn-primary">Login</button>
 
-                        <hr>
-                    </form>
+                                <hr>
+                            </form>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3 text-center">
-                </div>
-            </div>
-        </div>
 
-    <%- include('../includes/end.ejs') %>
+                <%- include('../includes/end.ejs') %>

@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const User = require('../models/user');
 const Room = require('../models/room');
 const UserRoom = require('../models/user-room');
@@ -13,7 +19,7 @@ const db = require('../util/database');
 
 const Op = Sequelize.Op;
 
-exports.analyzeGames = function () {
+exports.analyzeGames = function() {
     let promises = [];
     Game.findAll({
         where: {
@@ -47,12 +53,10 @@ exports.analyzeGames = function () {
                             }).then(userroom => {
                                 if (outcome == true) {
                                     userroom.points += 10;
-                                }
-                                else {
+                                } else {
                                     if (room.scoringType == 2) {
                                         userroom.points -= 5;
-                                    }
-                                    else if (room.scoringType == 3) {
+                                    } else if (room.scoringType == 3) {
                                         userroom.points -= 10;
                                     }
                                 }
@@ -66,7 +70,7 @@ exports.analyzeGames = function () {
     })
 }
 
-exports.analyzeRoomEnd = function () {
+exports.analyzeRoomEnd = function() {
     Room.findAll().then(rooms => {
         const today = new Date();
         for (let room of rooms) {
@@ -95,8 +99,7 @@ exports.analyzeRoomEnd = function () {
                     Promise.all(promises).then(result => {
                         if (room.distributionType == 1) {
                             first.money += prize;
-                        }
-                        else if (room.distributionType == 2) {
+                        } else if (room.distributionType == 2) {
                             first.money += prize / 2;
                             second.money += prize * 0.3;
                             third.money += prize * 0.2;
@@ -115,8 +118,7 @@ exports.analyzeRoomEnd = function () {
                                 isRead: 0
                             });
 
-                        }
-                        else {
+                        } else {
                             first.money += prize * 0.7;
                             second.money += prize * 0.2;
                             third.money += prize * 0.1;
@@ -155,7 +157,7 @@ exports.analyzeRoomEnd = function () {
     })
 }
 
-exports.analyzeRoomStart = function () {
+exports.analyzeRoomStart = function() {
     const today = new Date();
     Room.findAll().then(rooms => {
         for (let room of rooms) {

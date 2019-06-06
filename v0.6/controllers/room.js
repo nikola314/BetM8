@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const User = require('../models/user');
 
 const Room = require('../models/room');
@@ -65,85 +71,83 @@ exports.postCreateRoom = (req, res, next) => {
 
     if (sport == constants.SPORT_FOOTBALL) {
         sportName = 'Football';
-    }
-    else if (sport == constants.SPORT_BASKETBALL) {
+    } else if (sport == constants.SPORT_BASKETBALL) {
         sportName = 'Basketball';
-    }
-    else if (sport == constants.SPORT_TENNIS) {
+    } else if (sport == constants.SPORT_TENNIS) {
         sportName = 'Tennis';
     }
     Room.findOne({
-        where: { name: name }
-    }).then(roomDoc => {
-        let redirect = false;
-        if (roomDoc) {
-            req.flash('error', 'Room with this name already exists!');
-            redirect = true;
-        }
-        if (!name || visibility == 0 || distributionType == 0 || scoringType == 0 || sport == 0 || !minPlayers || !maxPlayers || !entryFee || dateBegin == 0 || dateEnd == 0 || latestLeave == 0) {
-            req.flash('error', 'not all fields are filled!');
-            redirect = true;
-        }
-        if (dateEnd < dateBegin || latestLeave >= dateBegin || dateBegin <= today) {
-            req.flash('error', 'You did not set dates in the appropriate way');
-            redirect = true;
-        }
-        if (minPlayers >= maxPlayers) {
-            req.flash('error', 'Max players count must be greater than min players');
-            redirect = true;
-        }
-        if (minPlayers < 2) {
-            req.flash('error', 'Min players count must be greater than 1');
-            redirect = true;
-        }
-        if (req.session.user.money < entryFee) {
-            req.flash('error', 'You don\'t have enough money to create this room!');
-            redirect = true;
-        }
-        if (entryFee < 50) {
-            req.flash('error', 'Minimum entry fee is 50!');
-            redirect = true;
-        }
-        if (minPlayers == 2 && distributionType > 1) {
-            req.flash('error', 'Number of players must be greater than 2 in order to select desired distribution type');
-            redirect = true;
-        }
-        if (redirect) {
-            return res.redirect('/create-room');
-        }
-        Room.create({
-            name: name,
-            visibility: visibility,
-            distributionType: distributionType,
-            scoringType: scoringType,
-            sport: sport,
-            minPlayers: minPlayers,
-            maxPlayers: maxPlayers,
-            entryFee: entryFee,
-            membersCount: 0,
-            dateBegin: dateBegin,
-            dateEnd: dateEnd,
-            latestLeave: latestLeave,
-            userId: req.session.user.id
-        }).then(room => {
-            League.findAll({
-                where: {
-                    sport: sportName
-                }
-            }).then(leagues => {
-                for (let league of leagues) {
-                    RoomLeague.create({
-                        roomId: room.id,
-                        leagueId: league.id
-                    });
-                }
-            });
-            joinRoom(req, res, next, room.id);
-        }).catch(err => {
-            console.log(err);
-        })
+            where: { name: name }
+        }).then(roomDoc => {
+            let redirect = false;
+            if (roomDoc) {
+                req.flash('error', 'Room with this name already exists!');
+                redirect = true;
+            }
+            if (!name || visibility == 0 || distributionType == 0 || scoringType == 0 || sport == 0 || !minPlayers || !maxPlayers || !entryFee || dateBegin == 0 || dateEnd == 0 || latestLeave == 0) {
+                req.flash('error', 'not all fields are filled!');
+                redirect = true;
+            }
+            if (dateEnd < dateBegin || latestLeave >= dateBegin || dateBegin <= today) {
+                req.flash('error', 'You did not set dates in the appropriate way');
+                redirect = true;
+            }
+            if (minPlayers >= maxPlayers) {
+                req.flash('error', 'Max players count must be greater than min players');
+                redirect = true;
+            }
+            if (minPlayers < 2) {
+                req.flash('error', 'Min players count must be greater than 1');
+                redirect = true;
+            }
+            if (req.session.user.money < entryFee) {
+                req.flash('error', 'You don\'t have enough money to create this room!');
+                redirect = true;
+            }
+            if (entryFee < 50) {
+                req.flash('error', 'Minimum entry fee is 50!');
+                redirect = true;
+            }
+            if (minPlayers == 2 && distributionType > 1) {
+                req.flash('error', 'Number of players must be greater than 2 in order to select desired distribution type');
+                redirect = true;
+            }
+            if (redirect) {
+                return res.redirect('/create-room');
+            }
+            Room.create({
+                name: name,
+                visibility: visibility,
+                distributionType: distributionType,
+                scoringType: scoringType,
+                sport: sport,
+                minPlayers: minPlayers,
+                maxPlayers: maxPlayers,
+                entryFee: entryFee,
+                membersCount: 0,
+                dateBegin: dateBegin,
+                dateEnd: dateEnd,
+                latestLeave: latestLeave,
+                userId: req.session.user.id
+            }).then(room => {
+                League.findAll({
+                    where: {
+                        sport: sportName
+                    }
+                }).then(leagues => {
+                    for (let league of leagues) {
+                        RoomLeague.create({
+                            roomId: room.id,
+                            leagueId: league.id
+                        });
+                    }
+                });
+                joinRoom(req, res, next, room.id);
+            }).catch(err => {
+                console.log(err);
+            })
 
-    })
+        })
         .catch(err => { console.log(err); });
 
 
@@ -206,8 +210,7 @@ exports.getSingleRoom = (req, res, next) => {
         if (!room) {
             req.flash('error', 'Room not found!');
             return res.redirect('/room-home');
-        }
-        else {
+        } else {
             if (room.dateBegin < today) roomStarted = true;
             roomOwnerId = room.userId;
             let promises = [];
@@ -328,8 +331,7 @@ exports.postLeaveRoomReq = (req, res, next) => {
     if (today < latestLeave) {
         message = 'If you leave the room, 75% of the amount of money you have invested will be returned to you!';
         refund = true;
-    }
-    else {
+    } else {
         message = 'If you leave the room, you will not be refunded!';
         refund = false;
     }
@@ -342,8 +344,7 @@ exports.postLeaveRoomReq = (req, res, next) => {
         if (!userroom) {
             req.flash('error', 'You are not in this room!');
             return res.redirect('/single-room?roomId=' + roomId);
-        }
-        else {
+        } else {
             Room.findOne({
                 where: {
                     id: roomId
@@ -356,8 +357,7 @@ exports.postLeaveRoomReq = (req, res, next) => {
                 if (room.userId == req.session.user.id) {
                     req.flash('error', 'You are creator of this room! You can\'t leave it!');
                     return res.redirect('/room-home');
-                }
-                else {
+                } else {
                     return res.render('room/popup', {
                         pageTitle: 'Popup',
                         path: '/popup',
@@ -412,8 +412,7 @@ exports.postLeaveRoom = (req, res, next) => {
                 }
             })
         })
-    }
-    else {
+    } else {
         req.flash('info', 'You have not left the room!');
         return res.redirect('/my-rooms');
     }
@@ -435,8 +434,7 @@ exports.postMakePrediction = (req, res, next) => {
         if (!userroom) {
             req.flash('error', 'Only room members can make predictions!');
             return res.redirect('/single-room?roomId=' + roomId);
-        }
-        else {
+        } else {
             Prediction.findOne({
                 where: {
                     userId: userId,
@@ -451,8 +449,7 @@ exports.postMakePrediction = (req, res, next) => {
                         req.flash('info', 'Prediction for game [' + gameId + '] have been saved successfully');
                         return res.redirect('/single-room?roomId=' + roomId);
                     })
-                }
-                else {
+                } else {
                     Prediction.create({
                         result: prediction,
                         userId: userId,
@@ -480,12 +477,10 @@ exports.joinPrivateRoomReq = (req, res, next) => {
         if (!room) {
             req.flash('error', 'Room with that name doesn\'t exist!');
             return res.redirect('/room-home');
-        }
-        else if (room.visibility == 1) {
+        } else if (room.visibility == 1) {
             req.flash('error', 'That is public room!');
             return res.redirect('/room-home');
-        }
-        else {
+        } else {
             UserRoom.findOne({
                 where: {
                     userId: req.session.user.id,
@@ -495,8 +490,7 @@ exports.joinPrivateRoomReq = (req, res, next) => {
                 if (userroom) {
                     req.flash('error', 'You are already in this room!');
                     return res.redirect('/room-home');
-                }
-                else {
+                } else {
                     Request.findOne({
                         where: {
                             roomId: room.id,
@@ -582,8 +576,7 @@ exports.postHandleReq = (req, res, next) => {
                                 })
                             })
                         })
-                    }
-                    else {
+                    } else {
                         Message.create({
                             senderId: req.session.user.id,
                             receiverId: userId,
@@ -623,8 +616,7 @@ function joinRoom(req, res, next, roomId) {
         if (room.membersCount == room.maxPlayers) {
             req.flash('error', 'This room is full!');
             return res.redirect('/room-home');
-        }
-        else {
+        } else {
             User.findOne({
                 where: {
                     id: userId
@@ -633,8 +625,7 @@ function joinRoom(req, res, next, roomId) {
                 if (user.money < room.entryFee) {
                     req.flash('error', 'You don\'t have enough money to join this room!');
                     return res.redirect('/room-home');
-                }
-                else {
+                } else {
                     UserRoom.findOne({
                         where: {
                             userId: userId,
@@ -644,8 +635,7 @@ function joinRoom(req, res, next, roomId) {
                         if (result) {
                             req.flash('error', 'You are already in this room!');
                             return res.redirect('/room-home');
-                        }
-                        else {
+                        } else {
                             UserRoom.create({
                                 points: 0,
                                 userId: userId,

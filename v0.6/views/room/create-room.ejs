@@ -1,13 +1,19 @@
+<!-- 
+	Authors:
+  		-Nikola Veljanovski
+		-Jelena Ilic
+-->
+
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/auth.css">
-</head>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    </head>
 
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <br/><br/><br/><br/>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <br/><br/><br/><br/>
 
-    <!-- <main>
+            <!-- <main>
         <%- include('../includes/feedback-messages.ejs') %>
         <form class="login-form" action="/create-room" method="POST">
             <div class="form-control">
@@ -79,92 +85,92 @@
         </form>
     </main> -->
 
-    
-        <%- include('../includes/feedback-messages.ejs') %>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 text-center">
-                </div>
-                <div class="col-lg-6 text-center">
-                    <form action="/create-room" method="POST">
-                        <h1 >Create room</h1>
-                        <p>Please fill in this form to create a room.</p>
-                        <hr>
-                        <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input class="form-control" type="name" name="name" id="name">
+
+            <%- include('../includes/feedback-messages.ejs') %>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-3 text-center">
                         </div>
-                        <div class="form-group">
-                            <label for="visibility">Visibility:</label>
-                            <select name="visibility">
+                        <div class="col-lg-6 text-center">
+                            <form action="/create-room" method="POST">
+                                <h1>Create room</h1>
+                                <p>Please fill in this form to create a room.</p>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="name">Name:</label>
+                                    <input class="form-control" type="name" name="name" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="visibility">Visibility:</label>
+                                    <select name="visibility">
                                 <option value="0" selected="selected">Select Visibility</option>
                                 <option value="1">Public</option>
                                 <option value="2">Private</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="distributionType">Distribution type:</label>
-                            <select name="distributionType">
+                                </div>
+                                <div class="form-group">
+                                    <label for="distributionType">Distribution type:</label>
+                                    <select name="distributionType">
                                 <option value="0" selected="selected">Select Distribution type</option>
                                 <option value="1">Winner takes it all</option>
                                 <option value="2">1st [50%] 2nd [30%] 3rd [20%]</option>
                                 <option value="3">1st [70%] 2nd [20%] 3rd [10%]</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="scoringType">Scoring type:</label>
-                            <select name="scoringType">
+                                </div>
+                                <div class="form-group">
+                                    <label for="scoringType">Scoring type:</label>
+                                    <select name="scoringType">
                                 <option value="0" selected="selected">Select Scoring type</option>
                                 <option value="1">No negative points for wrong predictions</option>
                                 <option value="2">50% negative points for wrong prediction</option>
                                 <option value="3">100% negative points for wrong prediciton</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="sport">Sport:</label>
-                            <select name="sport">
+                                </div>
+                                <div class="form-group">
+                                    <label for="sport">Sport:</label>
+                                    <select name="sport">
                                 <option value="0" selected="selected">Select sport</option>
                                 <option value="1">Football</option>
                                 <option value="2">Basketball</option>
                                 <option value="3">Tennis</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="minPlayers">Min Players:</label>
-                            <input type="number" name="minPlayers" id="minPlayers">
-                        </div>
-                        <div class="form-group">
-                            <label for="maxPlayers">Max Players:</label>
-                            <input type="number" name="maxPlayers" id="maxPlayers">
-                        </div>
-                        <div class="form-group">
-                            <label for="entryFee">Entry fee (RSD):</label>
-                            <input type="number" name="entryFee" id="entryFee">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateBegin">Date Begin:</label>
-                            <input type="date" name="dateBegin" id="dateBegin">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateEnd">Date End:</label>
-                            <input type="date" name="dateEnd" id="dateEnd">
-                        </div>
-                        <div class="form-group">
-                            <label for="latestLeave">Latest Leave:</label>
-                            <input type="date" name="latestLeave" id="latestLeave">
-                        </div>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button type="submit" class="btn btn-primary">Create Room</button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="minPlayers">Min Players:</label>
+                                    <input type="number" name="minPlayers" id="minPlayers">
+                                </div>
+                                <div class="form-group">
+                                    <label for="maxPlayers">Max Players:</label>
+                                    <input type="number" name="maxPlayers" id="maxPlayers">
+                                </div>
+                                <div class="form-group">
+                                    <label for="entryFee">Entry fee (RSD):</label>
+                                    <input type="number" name="entryFee" id="entryFee">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateBegin">Date Begin:</label>
+                                    <input type="date" name="dateBegin" id="dateBegin">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateEnd">Date End:</label>
+                                    <input type="date" name="dateEnd" id="dateEnd">
+                                </div>
+                                <div class="form-group">
+                                    <label for="latestLeave">Latest Leave:</label>
+                                    <input type="date" name="latestLeave" id="latestLeave">
+                                </div>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="btn btn-primary">Create Room</button>
 
-                    </form>
+                            </form>
+                        </div>
+                        <div class="col-lg-3 text-center">
+                        </div>
+                    </div>
+
+
+
+
                 </div>
-                <div class="col-lg-3 text-center">
-                </div>
-            </div>
 
-
-
-
-        </div>
-    
-    <%- include('../includes/end.ejs') %>
+                <%- include('../includes/end.ejs') %>

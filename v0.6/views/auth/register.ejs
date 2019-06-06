@@ -1,13 +1,19 @@
+<!-- 
+	Authors:
+  		-Nikola Veljanovski
+		-Jelena Ilic
+-->
+
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-<link rel="stylesheet" href="/css/auth.css">
-</head>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/auth.css">
+    </head>
 
-<body>
-    <%- include('../includes/navigation.ejs') %>
-    <br/><br/><br/><br/>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <br/><br/><br/><br/>
 
-    <!-- <main>
+            <!-- <main>
         <%- include('../includes/feedback-messages.ejs') %>
         <form class="login-form" action="/register" method="POST">
             <div class="form-control">
@@ -44,58 +50,58 @@
     </main> -->
 
 
-    
-        <div class="container">
-            <%- include('../includes/feedback-messages.ejs') %>
 
-            <div class="row">
-                <div class="col-lg-3 text-center">
-                </div>
-                <div class="col-lg-6 text-center">
-                    <form action="/register" method="POST">
-                        <h1>Register</h1>
-                        <p>Please fill in this form to create an account.</p>
-                        <hr>
-                        <div class="form-group">
-                            <label for="name">First name:</label>
-                            <input class="form-control" type="name" name="name" id="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="surname">Last name:</label>
-                            <input class="form-control" type="surname" name="surname" id="surname">
-                        </div>
+            <div class="container">
+                <%- include('../includes/feedback-messages.ejs') %>
 
-                        <div class="form-group">
-                            <label for="username">Username:</label>
-                            <input class="form-control" type="username" name="username" id="username">
+                    <div class="row">
+                        <div class="col-lg-3 text-center">
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email address:</label>
-                            <input type="email" class="form-control" name="email" id="email">
+                        <div class="col-lg-6 text-center">
+                            <form action="/register" method="POST">
+                                <h1>Register</h1>
+                                <p>Please fill in this form to create an account.</p>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="name">First name:</label>
+                                    <input class="form-control" type="name" name="name" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="surname">Last name:</label>
+                                    <input class="form-control" type="surname" name="surname" id="surname">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="username">Username:</label>
+                                    <input class="form-control" type="username" name="username" id="username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email address:</label>
+                                    <input type="email" class="form-control" name="email" id="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password:</label>
+                                    <input type="password" class="form-control" name="password" id="password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Repeat password:</label>
+                                    <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="country">Country:</label>
+                                    <%- include('../includes/countries.ejs') %>
+                                </div>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <button type="submit" class="btn btn-primary">Register</button>
+                                <hr>
+                                <div class="container signin">
+                                    <p>Already have an account? <a href="/login">Sign in</a>.</p>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" name="password" id="password">
+                        <div class="col-lg-3 text-center">
                         </div>
-                        <div class="form-group">
-                            <label for="confirmPassword">Repeat password:</label>
-                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
-                        </div>
-                        <div class="form-group">
-                            <label for="country">Country:</label>
-                            <%- include('../includes/countries.ejs') %>
-                        </div>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <hr>
-                        <div class="container signin">
-                            <p>Already have an account? <a href="/login">Sign in</a>.</p>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-lg-3 text-center">
-                </div>
+                    </div>
             </div>
-        </div>
 
-    <%- include('../includes/end.ejs') %>
+            <%- include('../includes/end.ejs') %>

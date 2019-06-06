@@ -1,12 +1,18 @@
+<!-- 
+	Authors:
+  		-Nikola Veljanovski
+		-Jelena Ilic
+-->
+
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css">
-</head>
+    <link rel="stylesheet" href="/css/forms.css">
+    </head>
 
-<body>
-	<%- include('../includes/navigation.ejs') %>
-	<br/><br/><br/><br/>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <br/><br/><br/><br/>
 
-    <!--<main>
+            <!--<main>
         <% if (currentUser) { %>
         <form class="login-form" action="/edit-user" method="POST">
             <div class="form-control">
@@ -38,72 +44,71 @@
         <% } %>
     </main>
     <%- include('../includes/end.ejs') %>-->
-	
-	
-	
-	
-	
-      <div class="container">
-		<% if (currentUser) { %>
-			<div class = "row">
-				<div class="col-lg-2 text-center">
-				</div>
-				<div class="col-lg-8 text-center">
-					<h2> Edit personal data </h2>
-				</div>
-				<div class="col-lg-2 text-center">
-				</div>
-			</div>
-			
-			<div class = "row">
-				<div class="col-lg-12 text-center">
-					<hr>
-				</div>
-			</div>
-			
-			<form action="/edit-user" method="POST">
-				<div class="container">
-					<p>Please fill in this form to edit your data.</p>
-					<hr>
-					
-					<div class="form-group">
-						<label for="name">First name:</label>
-						<input type="name" name="name" id="name" value="<%= currentUser.firstName %>" class="form-control">
-					</div>
-					
-					<div class="form-group">
-						<label for="surname">Last name:</label>
-						<input type="surname" name="surname" id="surname" value="<%= currentUser.lastName %>" class="form-control">
-					</div>
 
-					<div class="form-group">
-						<label for="username">Username:</label>
-						<input type="username" name="username" id="username" readonly value="<%= currentUser.username %>" class="form-control">
-					</div>
-			
-					<div class="form-group">
-						<label for="email">Email address:</label>
-						<input type="email" name="email" id="email" value="<%= currentUser.mail %>" class="form-control">
-					</div>
-			
-					<div class="form-group">
-						<label for="country"> Country: </label>
-						<%- include('../includes/countries.ejs') %>
-					</div>
-					
-					<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-					<button class="btn btn-primary" type="submit">Submit changes</button>
-				</div>
-			</form>
-		
-		<% } else { %>
-			<div class = "row">
-				<div class="col-lg-12 text-center">
-					<h2> No user! </h2>
-				</div>
-			</div>
-        <% } %>
-	   </div>
-	
-	<%- include('../includes/end.ejs') %>
-	
+
+
+
+
+            <div class="container">
+                <% if (currentUser) { %>
+                    <div class="row">
+                        <div class="col-lg-2 text-center">
+                        </div>
+                        <div class="col-lg-8 text-center">
+                            <h2> Edit personal data </h2>
+                        </div>
+                        <div class="col-lg-2 text-center">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <hr>
+                        </div>
+                    </div>
+
+                    <form action="/edit-user" method="POST">
+                        <div class="container">
+                            <p>Please fill in this form to edit your data.</p>
+                            <hr>
+
+                            <div class="form-group">
+                                <label for="name">First name:</label>
+                                <input type="name" name="name" id="name" value="<%= currentUser.firstName %>" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="surname">Last name:</label>
+                                <input type="surname" name="surname" id="surname" value="<%= currentUser.lastName %>" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username">Username:</label>
+                                <input type="username" name="username" id="username" readonly value="<%= currentUser.username %>" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email address:</label>
+                                <input type="email" name="email" id="email" value="<%= currentUser.mail %>" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="country"> Country: </label>
+                                <%- include('../includes/countries.ejs') %>
+                            </div>
+
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn btn-primary" type="submit">Submit changes</button>
+                        </div>
+                    </form>
+
+                    <% } else { %>
+                        <div class="row">
+                            <div class="col-lg-12 text-center">
+                                <h2> No user! </h2>
+                            </div>
+                        </div>
+                        <% } %>
+            </div>
+
+            <%- include('../includes/end.ejs') %>

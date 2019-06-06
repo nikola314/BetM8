@@ -1,3 +1,9 @@
+/* 
+  Authors:
+    -Nikola Kesic
+    -Dimitrije Milenkovic
+*/
+
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -45,17 +51,17 @@ app.use(morgan('dev'));
 
 // Initialize variables for all pages ??
 app.use((req, res, next) => {
-  res.locals.currentUser = req.session.user ? req.session.user : null;
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.newMessagesCnt = req.session.newMessagesCnt;
-  next();
+    res.locals.currentUser = req.session.user ? req.session.user : null;
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.newMessagesCnt = req.session.newMessagesCnt;
+    next();
 });
 
 
 app.use(csrfProtection);
 app.use((req, res, next) => {
-  res.locals.csrfToken = req.csrfToken();
-  next();
+    res.locals.csrfToken = req.csrfToken();
+    next();
 });
 app.use(adminRoutes);
 app.use(homeRoutes);
@@ -89,16 +95,15 @@ League.belongsToMany(Room, { through: RoomLeague });
 
 
 sequelize
-  // First sync is for populating database with models, second one is for regular use
-  // .sync({ force: true })
-  .sync()
-  .then(cart => {
-    setInterval(analyzer.analyzeGames, 5000);
-    setInterval(analyzer.analyzeRoomEnd, 10000);
-    setInterval(analyzer.analyzeRoomStart, 11000);
-    app.listen(3000);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-
+// First sync is for populating database with models, second one is for regular use
+// .sync({ force: true })
+    .sync()
+    .then(cart => {
+        setInterval(analyzer.analyzeGames, 5000);
+        setInterval(analyzer.analyzeRoomEnd, 10000);
+        setInterval(analyzer.analyzeRoomStart, 11000);
+        app.listen(3000);
+    })
+    .catch(err => {
+        console.log(err);
+    });
